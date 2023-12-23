@@ -492,7 +492,8 @@ if env("AWS_ENABLED"):
     STATIC_ROOT = ""
 elif DEBUG:
     STATIC_URL = env.str("DJANGO_STATIC_URL")
-    STATIC_ROOT = os.path.expanduser("~/source/edc_source/meta-edc/static/")
+    # STATIC_ROOT = os.path.expanduser("~/source/edc_source/meta-edc/static/")
+    STATIC_ROOT = env.str("DJANGO_STATIC_ROOT")
 else:
     # run collectstatic, check nginx LOCATION
     STATIC_URL = env.str("DJANGO_STATIC_URL")
