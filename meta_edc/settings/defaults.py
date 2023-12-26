@@ -172,7 +172,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "multisite.middleware.DynamicSiteMiddleware",
+#    "multisite.middleware.DynamicSiteMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -323,7 +323,7 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = env.tuple("DJANGO_SECURE_PROXY_SSL_HEADER")
     SESSION_COOKIE_SECURE = env.str("DJANGO_SESSION_COOKIE_SECURE")
     # other security defaults
-    SECURE_SSL_REDIRECT = True
+#    SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 31_536_000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_CONTENT_TYPE_NOSNIFF = True

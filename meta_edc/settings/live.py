@@ -7,6 +7,8 @@ print(f"Settings file {__file__}")
 SITE_ID = SiteID(default=1)
 EDC_SITES_UAT_DOMAIN = False
 ALLOWED_HOSTS = [
+    "147.182.196.153",
+    "0.0.0.0",
     "127.0.0.1",
     "localhost",
     "amana.tz.meta3.clinicedc.org",
