@@ -261,25 +261,6 @@ You could manually install each one as well
 # pip install -r requirements.txt
 ```
 
-# Local Settings Setup
-
-Add code to your settings.py file and push to server
-
-```
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-```
-
-Create a file called **local_settings.py** on your server along side of settings.py and add the following
-
-- SECRET_KEY
-- ALLOWED_HOSTS
-- DATABASES
-- DEBUG
-- EMAIL\_\*
-
 ## Run Migrations
 ```
 # python manage.py makemigrations
