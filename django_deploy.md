@@ -255,10 +255,16 @@ You need to install the python3-venv package
 
 ## Install pip modules from requirements
 
-You could manually install each one as well
 
 ```
 # pip install -r requirements.txt
+```
+
+## Create some folders
+
+```
+# mkdir log
+# mkdir crypto_fields
 ```
 
 ## Run Migrations
