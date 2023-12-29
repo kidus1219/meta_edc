@@ -172,7 +172,7 @@ You should now be logged into the pg shell
 ### Create a database
 
 ```
-CREATE DATABASE btre_prod;
+CREATE DATABASE meta_edc;
 ```
 
 ### Create user
@@ -192,21 +192,13 @@ ALTER ROLE dbadmin SET timezone TO 'UTC';
 ### Give User access to database
 
 ```
-GRANT ALL PRIVILEGES ON DATABASE btre_prod TO dbadmin;
+GRANT ALL PRIVILEGES ON DATABASE meta_edc TO dbadmin;
 ```
 
 ### Quit out of Postgres
 
 ```
 \q
-```
-
-# Vitrual Environment
-
-You need to install the python3-venv package
-
-```
-# sudo apt install python3-venv
 ```
 
 ### Create project directory
@@ -216,10 +208,31 @@ You need to install the python3-venv package
 # cd pyapps
 ```
 
+# Git & Upload
+
+Create a new repo and push to it (you guys know how to do that)
+
+### Clone the project into the app folder on your server (Either HTTPS or setup SSH keys)
+
+```
+# git clone https://github.com/yourgithubname/meta_edc.git
+# cd meta_edc
+```
+
+# Vitrual Environment
+
+You need to install the python3-venv package
+
+```
+# sudo apt install python3-venv
+# sudo apt install python3.11
+# sudo apt install python3.11-venv
+```
+
 ### Create venv
 
 ```
-# python3 -m venv ./venv
+# python3.11 -m venv ./venv
 ```
 
 ### Activate the environment
@@ -228,23 +241,17 @@ You need to install the python3-venv package
 # source venv/bin/activate
 ```
 
-# Git & Upload
 
-### Pip dependencies
-
-From your local machine, create a requirements.txt with your app dependencies. Make sure you push this to your repo
+### Prepare for install
 
 ```
-$ pip freeze > requirements.txt
+# sudo apt-get update
+# sudo apt-get install pkg-config
+# sudo apt-get install libmysqlclient-dev
+# sudo apt-get install python3.11-dev
+# sudo apt-get install libcups2-dev
 ```
 
-Create a new repo and push to it (you guys know how to do that)
-
-### Clone the project into the app folder on your server (Either HTTPS or setup SSH keys)
-
-```
-# git clone https://github.com/yourgithubname/btre_project.git
-```
 
 ## Install pip modules from requirements
 
@@ -323,7 +330,7 @@ Add to requirements.txt
 ### Test Gunicorn serve
 
 ```
-# gunicorn --bind 0.0.0.0:8000 btre.wsgi
+# gunicorn --bind 0.0.0.0:8000 meta_edc.wsgi
 ```
 
 Your images, etc will be gone
@@ -371,12 +378,12 @@ After=network.target
 [Service]
 User=djangoadmin
 Group=www-data
-WorkingDirectory=/home/djangoadmin/pyapps/btre_project
-ExecStart=/home/djangoadmin/pyapps/venv/bin/gunicorn \
+WorkingDirectory=/home/djangoadmin/pyapps/meta_edc
+ExecStart=/home/djangoadmin/pyapps/meta_edc/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
-          btre.wsgi:application
+          meta_edc.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -406,7 +413,7 @@ WantedBy=multi-user.target
 ### Create project folder
 
 ```
-# sudo nano /etc/nginx/sites-available/btre_project
+# sudo nano /etc/nginx/sites-available/meta_edc
 ```
 
 ### Copy this code and paste into the file
@@ -418,11 +425,11 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /home/djangoadmin/pyapps/btre_project;
+        root /home/djangoadmin/pyapps/meta_edc;
     }
     
     location /media/ {
-        root /home/djangoadmin/pyapps/btre_project;    
+        root /home/djangoadmin/pyapps/meta_edc;    
     }
 
     location / {
@@ -435,7 +442,7 @@ server {
 ### Enable the file by linking to the sites-enabled dir
 
 ```
-# sudo ln -s /etc/nginx/sites-available/btre_project /etc/nginx/sites-enabled
+# sudo ln -s /etc/nginx/sites-available/meta_edc /etc/nginx/sites-enabled
 ```
 
 ### Test NGINX config
@@ -498,7 +505,7 @@ www  CNAME  example.com
 ALLOWED_HOSTS = ['IP_ADDRESS', 'example.com', 'www.example.com']
 ```
 
-### Edit /etc/nginx/sites-available/btre_project
+### Edit /etc/nginx/sites-available/meta_edc
 
 ```
 server {
